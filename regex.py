@@ -135,10 +135,6 @@ def followes(state, current):
                 # Follow all their e(psilons) too.
                 followes(x, current)
             
-
-
-
-            
 def match(regex, s):
     # This function will return True if and only if the regular expression
     # regex (fully) matches the string s. It returns false otherwise.
@@ -169,12 +165,10 @@ def match(regex, s):
                 if state.label == c:
                     # Add the state at the end of the arrow to current
                     followes(state.edges[0],current)
-                    
-                    
-    
     
     # Ask the NFA if it matches the string s.
     return nfa.accept in current
 
 
-print(match("a.b|b*","bbbbbbbbbbb"))
+if __name__ == "__main__":
+    print(match("a.b|b*","bbbbbbbbbbb"))
