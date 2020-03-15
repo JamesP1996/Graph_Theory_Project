@@ -172,4 +172,14 @@ def match(regex, s):
 # If not in Regex File Print "Regex" else if ran through this file
 # Print __main__
 if __name__ == "__main__":
-    print(match("a.b|b*","bbbbbbbbbbb"))
+    tests = [
+        ["a.b|b*","bbbbbb",True],
+        ["a.b|b*","bbbx",False],
+        ["a.b","ab",True],
+        ["b**","b",True],
+        ["b*","",True]
+    ]
+    
+    for test in tests:
+        assert match(test[0], test[1]) == test[2], test[0] + \
+        (" Should match " if test[2] else " should not match ") + test[1]
