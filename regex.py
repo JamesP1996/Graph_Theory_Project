@@ -177,4 +177,4 @@ def match(regex, s):
     return nfa.accept in current
 
 
-print(match("a.b|b*","bbbbbbb"))
+print(match("a.b|b*","bbbbbbbbbbb"))
