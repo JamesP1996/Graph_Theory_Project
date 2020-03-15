@@ -2,42 +2,38 @@
 # Classes used in thompson's construction
 
 class State:
-    # Every State has 0,1 or 2 edges from it
-    edges = []
-
-    # Label for the Arrows. None Means Epsilon.
-    label = None
-    
-    # Is this an accept state?
+    """A State with one or two edges, all edges labled by label."""
+    # Constructor for the Class
     def __init__(self, label=None, edges=[]):
+        # Every State has 0,1 or 2 edges from it
         self.edges = edges
+        # Label for the Arrows. None Means Epsilon.
         self.label = label
  
 class Fragment:
-    # Start state of NFA fragment.
-    start = None
-    # Accept State of NFA fragment.
-    accept = None
-
+    """An NFA fragment with a start state and an accept state."""
     # Constructor
     def __init__(self, start , accept):
+        # Start state of NFA fragment.
         self.start = start
+        # Accept State of NFA fragment.
         self.accept = accept
 
 def shunt(infix):
+    """Return the infix regular expression in postfix."""
     #Convert input to a stack-ish list.
     infix = list(infix)[::-1]
 
     #Operator Stack.
     opers = []
 
-    #Output List.
+    #Postfix regular expression.
     postfix = []
 
     #Operator Precendence
     prec = {'*': 100, '.': 80, '|': 60, ')': 40, '(': 20}
 
-    #Loop through input one character at a time
+    # Loop through input one character at a time
     while infix:
         # Pop Character from the input
         c = infix.pop()
@@ -53,7 +49,7 @@ def shunt(infix):
             # Get rid of the '('.
             opers.pop()
         elif c in prec:
-            # Push any operators on the opers stack with higher prec to the ouput.
+            # Push any operators on the opers stack with higher prec to the output.
             while opers and prec[c] < prec[opers[-1]]:
                 postfix.append(opers.pop())
             # Push C to Operator Stack
@@ -61,6 +57,7 @@ def shunt(infix):
         else:
             # Typically we just push the character to the output.
             postfix.append(c)
+            
     # Pop all operators to the output.   
     while opers:
         postfix.append(opers.pop())
@@ -69,10 +66,15 @@ def shunt(infix):
     return ''.join(postfix)
     
 
-def regex_compile(infix):
+def compile(infix):
+    """Return NFA Fragment representing the infix regular expression."""
+    
+    # Convert infix to postfix.
     postfix = shunt(infix)
+    # Make postfix a stack of characters.
     postfix = list(postfix)[::-1]
     
+    # A stack for NFA fragments.
     nfa_stack = []
     
     while postfix:
@@ -84,9 +86,10 @@ def regex_compile(infix):
             frag2 = nfa_stack.pop()
             # Point frag2's accept state at frag1's start state
             frag2.accept.edges.append(frag1.start)
-            # Create new Instance of Fragment to represent the new NFA.
-            newfrag = Fragment(frag2.start,frag1.accept)
-                 
+            # The new start state is frag2's.
+            start = frag2.start
+            # The new accept state is frag1's.
+            accept = frag1.accept   
         elif c == '|':
             # Pop Two Fragments off the stack.
             frag1 = nfa_stack.pop()
@@ -96,10 +99,7 @@ def regex_compile(infix):
             start = State(edges=[frag2.start, frag1.start])
             # Point the old accept states at the new one.
             frag2.accept.edges.append(accept)
-            frag1.accept.edges.append(accept)
-             # Create new instance of the Fragment to represent new NFA.
-            newfrag = Fragment(start,accept)
-              
+            frag1.accept.edges.append(accept)      
         elif c == '*':
             # Pop a single fragment off the stack
             frag = nfa_stack.pop()
@@ -108,23 +108,20 @@ def regex_compile(infix):
             start = State(edges=[frag.start,accept])
             # Points the arrows.
             frag.accept.edges = ([frag.start, accept])
-            # Create new instance of the Fragment to represent new NFA.
-            newfrag = Fragment(start,accept)
-            
         else:
             accept = State()
-            initial = State(label=c,edges = [accept])
-             # Create new instance of the Fragment to represent new NFA
-            newfrag = Fragment(initial,accept)
-             
+            start = State(label=c,edges = [accept])
+            
+        # Create new Instance of Fragment to represent the new NFA.
+        newfrag = Fragment(start,accept)     
         # Push the new NFA to the NFA Stack.
         nfa_stack.append(newfrag)
 
     # The NFA stack should have exactly one NFA on it.
     return nfa_stack.pop()  
 
-# Add a state to a set , and follow all of the e(psilon) arrows.
 def followes(state, current):
+    """Add a State to a Set and follow the e(psilon) arrows"""
     if state not in current:
         # Put the state itself into current.
         current.add(state)
@@ -136,11 +133,12 @@ def followes(state, current):
                 followes(x, current)
             
 def match(regex, s):
+    """Checks if the String S matches the Regular Expression Fully then returns True/False"""
     # This function will return True if and only if the regular expression
     # regex (fully) matches the string s. It returns false otherwise.
     
     # Compile the regular expression into NFA
-    nfa = regex_compile(regex)
+    nfa = compile(regex)
     
     # Try to Match the Regular Expression to the String S.
     
@@ -169,6 +167,9 @@ def match(regex, s):
     # Ask the NFA if it matches the string s.
     return nfa.accept in current
 
-
+# Can Call the Print Function for the Regex Expressions Match
+# In Another Python File. In This case "myScript.py"
+# If not in Regex File Print "Regex" else if ran through this file
+# Print __main__
 if __name__ == "__main__":
     print(match("a.b|b*","bbbbbbbbbbb"))
