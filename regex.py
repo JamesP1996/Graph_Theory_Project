@@ -122,14 +122,59 @@ def regex_compile(infix):
 
     # The NFA stack should have exactly one NFA on it.
     return nfa_stack.pop()  
+
+# Add a state to a set , and follow all of the e(psilon) arrows.
+def followes(state, current):
+    if state not in current:
+        # Put the state itself into current.
+        current.add(state)
+        # See whether state is labeled by e(psilon).
+        if state.label is None:
+            # Loop through the states pointed to by this state.
+            for x in state.edges:
+                # Follow all their e(psilons) too.
+                followes(x, current)
             
-def match(regex,s):
+
+
+
+            
+def match(regex, s):
     # This function will return True if and only if the regular expression
     # regex (fully) matches the string s. It returns false otherwise.
     
     # Compile the regular expression into NFA
     nfa = regex_compile(regex)
+    
+    # Try to Match the Regular Expression to the String S.
+    
+    # The Current set of states.
+    current = set()
+    # Add the first state , and follow all e(psilon) arrows.
+    followes(nfa.start,current)
+    # The Previous set of states.
+    previous = set()
+    
+    # Loop Through Characters in S.
+    for c in s:
+        # Keep track of where we were.
+        previous = current
+        # Create new empty set for states we're about to be in.
+        current = set()
+        # Loop Through Previous States
+        for state in previous:
+            # Only follow arrows not labeled by e(psilon)
+            if state.label is not None:
+                # If the Label of the state is equal to the Character you just read in.
+                if state.label == c:
+                    # Add the state at the end of the arrow to current
+                    followes(state.edges[0],current)
+                    
+                    
+    
+    
     # Ask the NFA if it matches the string s.
-    return nfa
+    return nfa.accept in current
+
 
 print(match("a.b|b*","bbbbbbb"))
