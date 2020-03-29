@@ -1,5 +1,5 @@
 # James Porter G00327095
-# Classes used in thompson's construction
+# Build NDFA From Regular Expression and Match Check
 
 class State:
     """A State with one or two edges, all edges labled by label."""
