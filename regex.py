@@ -31,7 +31,7 @@ def shunt(infix):
     postfix = []
 
     #Operator Precendence
-    prec = {'*': 100, '.': 80, '|': 60, ')': 40, '(': 20}
+    prec = {'*': 80,'+': 70,'?':60, '$':50,'.': 40, '|': 30, ')': 20, '(': 10}
 
     # Loop through input one character at a time
     while infix:
@@ -73,13 +73,13 @@ def compile(infix):
     postfix = shunt(infix)
     # Make postfix a stack of characters.
     postfix = list(postfix)[::-1]
-    
     # A stack for NFA fragments.
     nfa_stack = []
     
     while postfix:
         # Pop a character from postfix
         c = postfix.pop()
+        
         if c == '.':
             # Pop two fragments off the stack
             frag1 = nfa_stack.pop()
@@ -108,15 +108,43 @@ def compile(infix):
             start = State(edges=[frag.start,accept])
             # Points the arrows.
             frag.accept.edges = ([frag.start, accept])
+        elif c == '+':
+            # Pop single fragment from the stack
+            frag = nfa_stack.pop() 
+            # Create new intial and accepts states.
+            start  = State()
+            accept = State()
+            # Connect inital state to fragment start state
+            start.edges.append(frag.start) 
+            # Join one edge back to start to create a loop, and other to accept state
+            frag.accept.edges = ([frag.start, accept])
+        elif c == '$':
+            # $ should match a  empty string, So a.b$ should match a. 
+            # Pop a single fragment from the stack
+            frag = nfa_stack.pop()
+            # Create New Start State and New Accept State
+            start = State()
+            accept = State()
+            # Link new Start State with old Start State and old accept state with new accept state
+            start.edges.append(frag.start)
+            frag.accept = accept
+            # Match new accept with old initial
+            accept = frag.start
+        elif c =='?':
+            # Pop a single fragment from the stack
+            frag = nfa_stack.pop()
+            # Create a New Start State
+            start = State()
+            # Only require two states and two edges with the use of  '?' operator
+            start.edges = ([frag.start,frag.accept])
         else:
             accept = State()
             start = State(label=c,edges = [accept])
-            
         # Create new Instance of Fragment to represent the new NFA.
         newfrag = Fragment(start,accept)     
         # Push the new NFA to the NFA Stack.
         nfa_stack.append(newfrag)
-
+     
     # The NFA stack should have exactly one NFA on it.
     return nfa_stack.pop()  
 
@@ -175,9 +203,13 @@ if __name__ == "__main__":
     tests = [
         ["a.b|b*","bbbbbb",True],
         ["a.b|b*","bbbx",False],
-        ["a.b","ab",True],
+        ["a.b*","abbb",True],
         ["b**","b",True],
-        ["b*","",True]
+        ["b*","",True],
+        ["a.b*","abbb",True],
+        ["a$","a",False],
+        ["a.b+","ab",True],
+        ["a.b|a?","abbbb",False]
     ]
     
     for test in tests:

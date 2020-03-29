@@ -3,4 +3,4 @@
 
 import regex
 
-print(regex.match("a.b|b*","bbbbbbbbbbb"))
+print(regex.match("a.b|a?","abbbb"))
