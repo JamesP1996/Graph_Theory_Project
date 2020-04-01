@@ -1,4 +1,4 @@
-# Graph Theory Project for GMIT Software Development Year 3 "Graph Theory" Module. 
+# Build Non-Deterministic Finite Automata(NDFA) based on Postfix Regular Expressions and then Match them with a String
 ## James Porter G00327095
 
 
@@ -41,19 +41,19 @@ Before jumping head first into this project it was very important to gain a basi
 
 # Diagrams
 
-<b>Non-Special Characters by Ian McLoughlin</b>
+<b>Non-Special Characters by Ian McLoughlin</b><br>
 ![alt text](https://i.imgur.com/9uSLMM5.png "Non Special Characters Diagram")
 
-<b>Concatenation of Characters by Ian McLoughlin</b>
+<b>Concatenation of Characters by Ian McLoughlin</b><br>
 ![alt text](https://i.imgur.com/dfU2xiz.png "Concatenation of Characters Diagram")
 
-<b>Union of Characters by Ian McLoughlin</b>
+<b>Union of Characters by Ian McLoughlin</b><br>
 ![alt text](https://i.imgur.com/BgKM57J.png "Union of Characters Diagram")
 
-<b>Kleene * One or More Characters by Ian McLoughlin</b>
+<b>Kleene * One or More Characters by Ian McLoughlin</b><br>
 ![alt text](https://i.imgur.com/NqoUDuR.png "Kleene * One or More Characters Diagram")
 
-<b>Regular expression to ∈-NFA by GeekForGeeks.org</b>
+<b>Regular expression to ∈-NFA by GeekForGeeks.org</b><br>
 ![alt text](https://i.imgur.com/D707UCW.png "Regular Expression Diagram")
 
 
