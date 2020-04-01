@@ -27,7 +27,7 @@ Before jumping head first into this project it was very important to gain a basi
 - A Great Video on "Regular Expression" to NFA (Youtube)
 - Brilliant's Shunting Algorithm Wiki.
 - Operator Precedence and Infix to Postfix by RuneStone Academy
-- Written in Go But was Very Useful Blog with Descriptive Diagrams. [Regex Compiler in Go by Phanindra Moganti]
-(https://medium.com/@phanindramoganti/regex-under-the-hood-implementing-a-simple-regex-compiler-in-go-ef2af5c6079)
+- Written in Go But was Very Useful Blog with Descriptive Diagrams. [Regex Compiler in Go by Phanindra Moganti](https://medium.com/@phanindramoganti/regex-under-the-hood-implementing-a-simple-regex-compiler-in-go-ef2af5c6079)
+
 #### Python
 - https://www.learnpython.org/
