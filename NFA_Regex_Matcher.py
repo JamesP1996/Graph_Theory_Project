@@ -1,5 +1,7 @@
 # James Porter G00327095
 # Build NDFA From Regular Expression and Match Check
+# Arguement Parsing Package in Python, For Command-Line Interactions
+import argparse;
 
 class State:
     """A State with one or two edges, all edges labled by label."""
@@ -215,3 +217,13 @@ if __name__ == "__main__":
     for test in tests:
         assert match(test[0], test[1]) == test[2], test[0] + \
         (" Should match " if test[2] else " should not match ") + test[1]
+    
+    parser = argparse.ArgumentParser(
+    description="NFA Regular Expression (Infix to Postfix) Application"
+    )
+
+    parser.add_argument('test',help="This is a Test")
+    
+    #Parse the Arguements
+    args = parser.parse_args()
+    print(args)
