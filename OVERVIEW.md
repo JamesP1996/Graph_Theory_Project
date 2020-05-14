@@ -9,15 +9,15 @@ It's written using the python programming language and it's purpose is to constr
 # <b>Running the Code</b>
 To run this project you will a version of Python. Preferably Python 3. You can download python at their website https://www.python.org/downloads/.
 
-I used Vi on a Google Cloud Machine to code this up but I would reccomend to use Visual Studio Code or Pycharm if you were going to do this locally and wanted some intellisense.
+I used Vi on a Google Cloud Machine to code this up but I would recommend to use Visual Studio Code or Pycharm if you were going to do this locally and wanted some auto code completion features.
 
 ## <b>NFA_Regex_Matcher.py</b>
-To run this file , it uses a python package known as argparse. If you run this file with no command line arguements, nothing will come up so you need to run it with different optional commands. If you need help while running the program you can use, 
+To run this file , it uses a python package known as argparse. If you run this file with no command line arguments, nothing will come up so you need to run it with different optional commands. If you need help while running the program you can use, 
 ```
 python NFA_Regex_Matcher.py --help
 ```
 in the command line terminal where the file in the directory the file is located.
-The List of Command Line Arguements you can use in conjunction are 
+The List of Command Line Arguments you can use in conjunction are 
 
 ### <b>Regex Match a Regular Expression and a String (Evaluates to True or False)</b>
 
@@ -27,7 +27,7 @@ OR
 
 - ``` python NFA_Regex_Matcher.py -r "<Regular Expression Here> -s "<Some String to Match Here>" ```
 
-<i>The -r and -s are short handed ways of telling the arguement parser what you want to input. So -r is the same as --regex and -s is the same as --string.</i>
+<i>The -r and -s are short handed ways of telling the argument parser what you want to input. So -r is the same as --regex and -s is the same as --string.</i>
 
 ### <b>Input Infix Expression and Return a Postfix Expression</b>
 
@@ -37,7 +37,7 @@ OR
 
 - ``` python NFA_Regex_Matcher.py -p "<Infix Expression Here>" ```
 
-<i>Doing so will return the postfix version of any infix string you input into the command line arguement.</i>
+<i>Doing so will return the postfix version of any infix string you input into the command line argument.</i>
 
 ### <b>Run Tests within the NFA_Regex_Matcher.py Python Code</b>
 - ``` python NFA_Regex_Matcher.py --tests ```
@@ -46,11 +46,11 @@ OR
 
 - ``` python NFA_Regex_Matcher.py -t ```
 
-<i> The Test Part takes no posistional arguements and is simply run by the --tests or -t command. It will run through all the tests in the code and if the test returned the correct result it will say the test along with a print saying "Completed Successfully" underneath it. If this does not happen and it returns a error then that test where it stopped posting successful is where it failed</i>
+<i> The Test Part takes no positional arguments and is simply run by the --tests or -t command. It will run through all the tests in the code and if the test returned the correct result it will say the test along with a print saying "Completed Successfully" underneath it. If this does not happen and it returns a error then that test where it stopped posting successful is where it failed</i>
 
 ## How do the Tests Work in the NFA_Regex_Matcher.py File ?
 The tests in NFA_Regex_Matcher.py were basically setup using a dictionary/list of different Regex expressions matched against Strings then what the matching program should return. So For Example 
-The Regex Expresssion "a.b|b*" should match the string "bbbbbb" and return True.
+The Regex Expression "a.b|b*" should match the string "bbbbbb" and return True.
 
 <b>Tests in File:</b>
 ``` 
@@ -86,7 +86,7 @@ elif (args.tests is True):
 # Algorithms Used
 
 The method I used to go about this is that I used the [Shunting Yard and SPF by Dijkstra](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) to convert infix Regular Expressions to their postfix (Sometimes Known as <i>"Reverse Polish Notation"</i>) counterpart and then from this built the Non-Deterministic Finite Automata using [Thompson's Construction](https://en.wikipedia.org/wiki/Shunting-yard_algorithm).
-Once the Deterministic Non Finite Automata's were built, I could then use them to compare the Regular Expression to a Inputted String as displayed in the Tests Section of the Code in NFA_Regex_Matcher.Py
+Once the Deterministic Non Finite Automata's were built, I could then use them to compare the Regular Expression to a Inputted String as displayed in the Tests Section of the Code in NFA_Regex_Matcher.py
 
 1. Shunting Yard and SPF by Dijkstra
 2. Thompson's Construction
@@ -116,7 +116,7 @@ Sourced from IMGUR , unsure of it's original creator, this is what a typical non
 A diagram or NFA is made up of edges and fragments. For Example a is a fragment whilst 0 or 1 are edges. 
 There is always a Start State which would be A and a Accept State which in this case would be C. 
 
-Here is an example of a minimal deterministic automaton from wikipedia.
+Here is an example of a minimal deterministic automaton from Wikipedia.
 
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/DFA_example_multiplies_of_3.svg/369px-DFA_example_multiplies_of_3.svg.png "Deterministic Automaton")
 
@@ -136,7 +136,7 @@ The Differences Between Deterministic Finite Automata and Non Deterministic Fini
 
 In the case of this project we are using Getting Infix Regular Expressions and forwarding them to their postfix counter part and then constructing Non-Deterministic Finite Automata out of them and Comparing the NDFA Regular Expression to a String to see if they do or do not match.
 
-There are many diagrams on the README file of this github relevant to how each operator works in a NDFA construction.
+There are many diagrams on the README file of this GitHub relevant to how each operator works in a NDFA construction.
 
 # References
 
