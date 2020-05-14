@@ -243,6 +243,7 @@ if __name__ == "__main__":
              print("The inputted Regular Expression does Not Match the inputted String [False]")
         print("Evaluated to:")
         print(match(args.regex,args.string))
+        
     # Change Arguement (Infix) to Postfix Counter-Part
     elif(args.postfix != None):
         print(shunt(args.postfix))
