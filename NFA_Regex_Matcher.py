@@ -236,7 +236,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     # Match Inputted Regex with Inputted String
-    if (args.string and args.regex != None):
+    if (args.string and args.regex != None and args.postfix is None and args.tests is False):
         if(match(args.regex,args.string) is True ):
             print("The inputted Regular Expression does Match the inputted String [True]")
         else:
@@ -245,11 +245,11 @@ if __name__ == "__main__":
         print(match(args.regex,args.string))
         
     # Change Arguement (Infix) to Postfix Counter-Part
-    elif(args.postfix != None):
+    elif(args.postfix != None and args.string is None and args.regex is None and args.tests is False):
         print(shunt(args.postfix))
         
     # Run Test Cases and Print the test case along with Successful notification if completed successfully
-    elif (args.tests is True):
+    elif (args.tests is True and args.string is None and args.regex is None and args.postfix is None):
         for test in tests:
             assert match(test[0], test[1]) == test[2], test[0] + \
             (" Should match " if test[2] else " should not match ") + test[1]
