@@ -237,8 +237,12 @@ if __name__ == "__main__":
     
     # Match Inputted Regex with Inputted String
     if (args.string and args.regex != None):
+        if(match(args.regex,args.string) is True ):
+            print("The inputted Regular Expression does Match the inputted String [True]")
+        else:
+             print("The inputted Regular Expression does Not Match the inputted String [False]")
+        print("Evaluated to:")
         print(match(args.regex,args.string))
-        
     # Change Arguement (Infix) to Postfix Counter-Part
     elif(args.postfix != None):
         print(shunt(args.postfix))
