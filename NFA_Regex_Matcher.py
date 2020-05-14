@@ -1,7 +1,10 @@
 # James Porter G00327095
 # Build NDFA From Regular Expression and Match Check
+
 # Arguement Parsing Package in Python, For Command-Line Interactions
-import argparse;
+import argparse
+# Allows Raw Text In Arg Parse Description. Eg. New Lines and Breaks
+from argparse import RawTextHelpFormatter
 
 class State:
     """A State with one or two edges, all edges labled by label."""
@@ -214,16 +217,40 @@ if __name__ == "__main__":
         ["a.b|a?","abbbb",False]
     ]
     
-    for test in tests:
-        assert match(test[0], test[1]) == test[2], test[0] + \
-        (" Should match " if test[2] else " should not match ") + test[1]
+    
     
     parser = argparse.ArgumentParser(
-    description="NFA Regular Expression (Infix to Postfix) Application"
+    description="NFA Regular Expression (Infix to Postfix) Application \n-------------------------------------------------------"+ 
+    "\nThis Application will return True or False depending if the String matches Regular Expression"+
+    "\nAll Arguments are of type String so ensure you encapsulate your arguements with double quotes e.g. -s \"hello world\" "
+    , formatter_class=RawTextHelpFormatter
     )
 
-    parser.add_argument('test',help="This is a Test")
+    parser.add_argument('-r','--regex',type=str,metavar='',required=False,help="Regex Expression to Match")
+    parser.add_argument('-s','--string',type=str,metavar='',required=False,help="String to Match")
+    parser.add_argument('-t','--tests',required=False,help="Type -t or --tests to run tests in code only "
+                        +"(Will print each test if successful or throw error if not)",action="store_true")
+    parser.add_argument('-p','--postfix',type=str,required=False,metavar='',help="Input a Infix String to Return it's Postfix Version")
     
-    #Parse the Arguements
+    # Parse the Arguements
     args = parser.parse_args()
-    print(args)
+    
+    # Match Inputted Regex with Inputted String
+    if (args.string and args.regex != None):
+        print(match(args.regex,args.string))
+        
+    # Change Arguement (Infix) to Postfix Counter-Part
+    elif(args.postfix != None):
+        print(shunt(args.postfix))
+        
+    # Run Test Cases and Print the test case along with Successful notification if completed successfully
+    elif (args.tests is True):
+        for test in tests:
+            assert match(test[0], test[1]) == test[2], test[0] + \
+            (" Should match " if test[2] else " should not match ") + test[1]
+            print(test)
+            print("Completed Successfully")
+    
+    
+    
+
